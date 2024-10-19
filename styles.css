@@ -5,7 +5,7 @@ body {
     font-family: Arial, sans-serif;
 }
 
-#openWindowButton {
+#openWindowButton, #toggleChatButton {
     padding: 10px 20px;
     font-size: 16px;
     margin: 20px;
@@ -24,7 +24,7 @@ body {
 }
 
 .header {
-    background: #000000;
+    background: #007BFF;
     color: white;
     padding: 10px;
     display: flex;
@@ -33,5 +33,28 @@ body {
 
 .content {
     padding: 10px;
-    flex-grow: 1; /* Allow this area to grow */
+    flex-grow: 1;
+}
+
+/* Chat box styling */
+.chat-box {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 150px;
+    background-color: #333;
+    color: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hide the chat box initially */
+.hidden {
+    display: none;
 }
