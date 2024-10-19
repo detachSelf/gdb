@@ -47,12 +47,14 @@ function closeWindow(button) {
 function dragWindow(e, windowElement) {
     e.preventDefault();
 
-    // Get initial mouse and window positions
+    // Get the current position of the window in pixels
+    const rect = windowElement.getBoundingClientRect();
+    let initialTop = rect.top;
+    let initialLeft = rect.left;
+
+    // Get the initial mouse position
     let startX = e.clientX;
     let startY = e.clientY;
-
-    let initialTop = parseInt(windowElement.style.top);
-    let initialLeft = parseInt(windowElement.style.left);
 
     // Function to move the window
     function moveAt(e) {
