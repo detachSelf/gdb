@@ -39,6 +39,16 @@
     <footer>
         <p>&copy; 2024 Your Game Company</p>
     </footer>
-    <div id="windows-container"></div> <!-- Container for the windows -->
+    <div id="windows-container">
+        <div id="chatWindow" class="windowElement" style="display:none;">
+        <div class="header">
+            <h2>Chat</h2>
+            <button onclick="closeChat()">X</button>
+        </div>
+        <div class="messages" id="chatMessages"></div>
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    </div> <!-- Container for the windows -->
 </body>
 </html>
