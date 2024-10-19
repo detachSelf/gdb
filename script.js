@@ -6,6 +6,23 @@ document.getElementById('toggleChatButton').addEventListener('click', function()
     chatBox.classList.toggle('hidden'); // Toggle visibility
 });
 
+// Handle tab switching
+const tabs = document.querySelectorAll('.tab');
+const chatSections = document.querySelectorAll('.chat-section');
+
+// Add click event to each tab
+tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+        // Remove "active" class from all sections and hide them
+        chatSections.forEach(section => section.classList.remove('active'));
+        chatSections.forEach(section => section.classList.add('hidden'));
+
+        // Add "active" class to the selected section and display it
+        chatSections[index].classList.add('active');
+        chatSections[index].classList.remove('hidden');
+    });
+});
+
 document.getElementById('openWindowButton').addEventListener('click', function() {
     windowCount++;
     createNewWindow(windowCount);
