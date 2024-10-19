@@ -1,5 +1,11 @@
 let windowCount = 0;
 
+// Toggle the chat box
+document.getElementById('toggleChatButton').addEventListener('click', function() {
+    const chatBox = document.getElementById('chatBox');
+    chatBox.classList.toggle('hidden'); // Toggle visibility
+});
+
 document.getElementById('openWindowButton').addEventListener('click', function() {
     windowCount++;
     createNewWindow(windowCount);
@@ -17,14 +23,13 @@ function createNewWindow(count) {
     const viewportHeight = window.innerHeight;
 
     // Set window size
-    const windowWidth = 300; // Fixed window width
-    const windowHeight = 200; // Fixed window height
+    const windowWidth = 300;
+    const windowHeight = 200;
 
     // Calculate random top and left positions within the viewport bounds
-    const maxLeft = viewportWidth - windowWidth; // Max left position
-    const maxTop = viewportHeight - windowHeight; // Max top position
+    const maxLeft = viewportWidth - windowWidth;
+    const maxTop = viewportHeight - windowHeight;
 
-    // Random position but constrained within the viewport bounds
     newWindow.style.top = `${Math.random() * maxTop}px`;
     newWindow.style.left = `${Math.random() * maxLeft}px`;
 
@@ -51,54 +56,38 @@ function createNewWindow(count) {
     windowsContainer.appendChild(newWindow);
 }
 
-
-// Function to handle closing a window
-function closeWindow(button) {
-    const windowElement = button.parentElement.parentElement;
-    windowElement.remove();
-}
-
-// Dragging logic
 function dragWindow(e, windowElement) {
     e.preventDefault();
 
-    // Get the current position of the window in pixels
     const rect = windowElement.getBoundingClientRect();
-
-    // Calculate the offset between the mouse and the window's top-left corner
     let offsetX = e.clientX - rect.left;
     let offsetY = e.clientY - rect.top;
 
-    // Get viewport dimensions
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    // Function to move the window
     function moveAt(e) {
         let newTop = e.clientY - offsetY;
         let newLeft = e.clientX - offsetX;
 
-        // Constrain the window to stay within the viewport
         const windowWidth = windowElement.offsetWidth;
         const windowHeight = windowElement.offsetHeight;
 
-        // Prevent window from moving outside the left and right edges
         newLeft = Math.max(0, Math.min(newLeft, viewportWidth - windowWidth));
-        
-        // Prevent window from moving outside the top and bottom edges
         newTop = Math.max(0, Math.min(newTop, viewportHeight - windowHeight));
 
-        // Apply the new position
         windowElement.style.top = `${newTop}px`;
         windowElement.style.left = `${newLeft}px`;
     }
 
-    // Move the window as the mouse moves
     document.addEventListener('mousemove', moveAt);
 
-    // Stop dragging when the mouse is released
     document.addEventListener('mouseup', function() {
         document.removeEventListener('mousemove', moveAt);
     }, { once: true });
 }
 
+function closeWindow(button) {
+    const windowElement = button.parentElement.parentElement;
+    windowElement.remove();
+}
