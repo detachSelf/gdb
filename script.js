@@ -1,5 +1,24 @@
 let windowCount = 0;
 
+function openChat() {
+    document.getElementById('chatWindow').style.display = 'block';
+}
+
+function closeChat() {
+    document.getElementById('chatWindow').style.display = 'none';
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value;
+    if (message.trim()) {
+        const messagesDiv = document.getElementById('chatMessages');
+        messagesDiv.innerHTML += `<div>${message}</div>`;
+        input.value = ''; // Clear input field
+        messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to bottom
+    }
+}
+
 function openWindow() {
     windowCount++;
     const windowElement = document.createElement('div');
