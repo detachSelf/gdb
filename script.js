@@ -49,17 +49,15 @@ function dragWindow(e, windowElement) {
 
     // Get the current position of the window in pixels
     const rect = windowElement.getBoundingClientRect();
-    let initialTop = rect.top;
-    let initialLeft = rect.left;
 
-    // Get the initial mouse position
-    let startX = e.clientX;
-    let startY = e.clientY;
+    // Calculate the offset between where the mouse is clicked and the window's top-left corner
+    let offsetX = e.clientX - rect.left;
+    let offsetY = e.clientY - rect.top;
 
     // Function to move the window
     function moveAt(e) {
-        let newTop = initialTop + (e.clientY - startY);
-        let newLeft = initialLeft + (e.clientX - startX);
+        let newTop = e.clientY - offsetY;
+        let newLeft = e.clientX - offsetX;
         windowElement.style.top = `${newTop}px`;
         windowElement.style.left = `${newLeft}px`;
     }
@@ -72,3 +70,4 @@ function dragWindow(e, windowElement) {
         document.removeEventListener('mousemove', moveAt);
     }, { once: true });
 }
+
