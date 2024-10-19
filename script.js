@@ -11,8 +11,22 @@ function createNewWindow(count) {
     // Create a new window element
     const newWindow = document.createElement('div');
     newWindow.classList.add('windowElement');
-    newWindow.style.top = `${Math.random() * 80}vh`; // Random vertical position
-    newWindow.style.left = `${Math.random() * 80}vw`; // Random horizontal position
+
+    // Get viewport width and height
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Set window size
+    const windowWidth = 300; // Fixed window width
+    const windowHeight = 200; // Fixed window height
+
+    // Calculate random top and left positions within the viewport bounds
+    const maxLeft = viewportWidth - windowWidth; // Max left position
+    const maxTop = viewportHeight - windowHeight; // Max top position
+
+    // Random position but constrained within the viewport bounds
+    newWindow.style.top = `${Math.random() * maxTop}px`;
+    newWindow.style.left = `${Math.random() * maxLeft}px`;
 
     // Create header
     const header = document.createElement('div');
@@ -37,6 +51,7 @@ function createNewWindow(count) {
     windowsContainer.appendChild(newWindow);
 }
 
+
 // Function to handle closing a window
 function closeWindow(button) {
     const windowElement = button.parentElement.parentElement;
@@ -50,14 +65,30 @@ function dragWindow(e, windowElement) {
     // Get the current position of the window in pixels
     const rect = windowElement.getBoundingClientRect();
 
-    // Calculate the offset between where the mouse is clicked and the window's top-left corner
+    // Calculate the offset between the mouse and the window's top-left corner
     let offsetX = e.clientX - rect.left;
     let offsetY = e.clientY - rect.top;
+
+    // Get viewport dimensions
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
 
     // Function to move the window
     function moveAt(e) {
         let newTop = e.clientY - offsetY;
         let newLeft = e.clientX - offsetX;
+
+        // Constrain the window to stay within the viewport
+        const windowWidth = windowElement.offsetWidth;
+        const windowHeight = windowElement.offsetHeight;
+
+        // Prevent window from moving outside the left and right edges
+        newLeft = Math.max(0, Math.min(newLeft, viewportWidth - windowWidth));
+        
+        // Prevent window from moving outside the top and bottom edges
+        newTop = Math.max(0, Math.min(newTop, viewportHeight - windowHeight));
+
+        // Apply the new position
         windowElement.style.top = `${newTop}px`;
         windowElement.style.left = `${newLeft}px`;
     }
