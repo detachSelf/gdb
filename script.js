@@ -158,7 +158,7 @@ function storeCoordinates() {
     const y = document.getElementById('yCoordinate').value;
     const z = document.getElementById('zCoordinate').value;
 
-    fetch('https://7ez7eenqc5.execute-api.eu-north-1.amazonaws.com/store-coordinates', {
+    fetch('https://soh4ddyiof.execute-api.eu-north-1.amazonaws.com/prod/store-coordinates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ x, y, z })
@@ -181,7 +181,7 @@ function storeCoordinates() {
 }
 
 function retrieveCoordinates() {
-    fetch('https://7ez7eenqc5.execute-api.eu-north-1.amazonaws.com/retrieve-coordinates')
+    fetch('https://soh4ddyiof.execute-api.eu-north-1.amazonaws.com/prod/retrieve-coordinates')
     .then(response => {
         if (!response.ok) {
             return response.json().then(errorData => {
