@@ -165,16 +165,18 @@ function storeCoordinates() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Unknown error');
+            });
         }
         return response.json();
     })
     .then(data => {
-        alert('Coordinates stored successfully!'); // Display success message
+        alert('Coordinates stored successfully!');
     })
     .catch(error => {
         console.error('Error storing coordinates:', error);
-        alert('Failed to store coordinates. Please try again.'); // Display error message
+        alert(`Failed to store coordinates: ${error.message}`); // Display detailed error
     });
 }
 
@@ -182,7 +184,9 @@ function retrieveCoordinates() {
     fetch('https://13.61.61.2:3000/retrieve-coordinates')
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Unknown error');
+            });
         }
         return response.json();
     })
@@ -190,10 +194,10 @@ function retrieveCoordinates() {
         document.getElementById('xCoordinate').value = data.x;
         document.getElementById('yCoordinate').value = data.y;
         document.getElementById('zCoordinate').value = data.z;
-        alert('Coordinates retrieved successfully!'); // Display success message
+        alert('Coordinates retrieved successfully!');
     })
     .catch(error => {
         console.error('Error retrieving coordinates:', error);
-        alert('Failed to retrieve coordinates. Please try again.'); // Display error message
+        alert(`Failed to retrieve coordinates: ${error.message}`); // Display detailed error
     });
 }
