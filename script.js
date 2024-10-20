@@ -108,3 +108,84 @@ function closeWindow(button) {
     const windowElement = button.parentElement.parentElement;
     windowElement.remove();
 }
+
+// NEW CODE FOR TESTING DB FUNCTIONALITY
+
+document.getElementById('openDatabaseTestWindow').addEventListener('click', function() {
+    createDatabaseTestWindow();
+});
+
+function createDatabaseTestWindow() {
+    const windowsContainer = document.getElementById('windows-container');
+    
+    // Create a new window element
+    const dbWindow = document.createElement('div');
+    dbWindow.classList.add('windowElement');
+    dbWindow.style.top = '40vh'; // Centered vertical position
+    dbWindow.style.left = '40vw'; // Centered horizontal position
+
+    // Create header
+    const header = document.createElement('div');
+    header.classList.add('header');
+    header.innerHTML = `Database Test Window <button onclick="closeWindow(this)">X</button>`;
+    
+    // Create content area
+    const content = document.createElement('div');
+    content.classList.add('content');
+    content.innerHTML = `
+        <label>X Coordinate: <input type="number" id="xCoordinate"></label><br>
+        <label>Y Coordinate: <input type="number" id="yCoordinate"></label><br>
+        <label>Z Coordinate: <input type="number" id="zCoordinate"></label><br><br>
+        <button id="storeCoordinatesButton">Store Coordinates</button>
+        <button id="retrieveCoordinatesButton">Retrieve Coordinates</button>
+    `;
+
+    // Append header and content to the new window
+    dbWindow.appendChild(header);
+    dbWindow.appendChild(content);
+
+    // Append new window to the container
+    windowsContainer.appendChild(dbWindow);
+
+    // Event listeners for storing and retrieving coordinates
+    document.getElementById('storeCoordinatesButton').addEventListener('click', storeCoordinates);
+    document.getElementById('retrieveCoordinatesButton').addEventListener('click', retrieveCoordinates);
+}
+
+// Placeholder functions for storing and retrieving coordinates
+function storeCoordinates() {
+    const x = document.getElementById('xCoordinate').value;
+    const y = document.getElementById('yCoordinate').value;
+    const z = document.getElementById('zCoordinate').value;
+
+    fetch('/store-coordinates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ x, y, z })
+    }).then(response => response.json())
+      .then(data => {
+        alert('Coordinates stored successfully!');
+    }).catch(error => {
+        console.error('Error storing coordinates:', error);
+    });
+}
+
+function retrieveCoordinates() {
+    fetch('/retrieve-coordinates')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('xCoordinate').value = data.x;
+        document.getElementById('yCoordinate').value = data.y;
+        document.getElementById('zCoordinate').value = data.z;
+        alert('Coordinates retrieved successfully!');
+    }).catch(error => {
+        console.error('Error retrieving coordinates:', error);
+    });
+}
+
+
+
+
+
+
+
