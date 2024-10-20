@@ -158,7 +158,7 @@ function storeCoordinates() {
     const y = document.getElementById('yCoordinate').value;
     const z = document.getElementById('zCoordinate').value;
 
-    fetch('https://13.61.61.2:3000/store-coordinates', {
+    fetch('http://13.61.61.2:3000/store-coordinates', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ x, y, z })
@@ -181,7 +181,7 @@ function storeCoordinates() {
 }
 
 function retrieveCoordinates() {
-    fetch('https://13.61.61.2:3000/retrieve-coordinates')
+    fetch('http://13.61.61.2:3000/retrieve-coordinates')
     .then(response => {
         if (!response.ok) {
             return response.json().then(errorData => {
